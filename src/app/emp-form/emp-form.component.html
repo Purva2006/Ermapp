@@ -1,0 +1,91 @@
+<div class="container">
+    <form (ngSubmit)="onSave()" #empform="ngForm">
+     <div class="mb-3">
+         <label for="empId" class="form-label">Employee</label>
+         <input type="number" class="form-control" id="empId" name="empId" [(ngModel)]="emp.empId" #empId="ngModel" required>
+     </div>
+
+    <!-- {{empId.errors | json}} -->
+    <div class="alert alert-danger" *ngIf="empId.dirty && empId.invalid">
+        Please Enter Your Employee Id
+
+    </div>
+ 
+     <div class="mb-3">
+         <label for="empName" class="form-label">Employee Name</label>
+         <input type="text" class="form-control" id="empName" name="empName" [(ngModel)]="emp.empName" required #empName="ngModel" pattern="^[A-Za-z]{3,} [A-Za-z]{3,}$">
+     </div>
+
+     <div class="alert alert-danger" *ngIf="empName.dirty && empName.invalid">
+       
+       <span *ngIf="empName.errors?.['required']">Please Enter Your Name</span>
+        <span *ngIf="empName.errors?.['pattern']"> Please Enter Your Full Name (Firstname LastName)</span>
+
+    </div>
+
+
+    <div class="mt-3">
+        <label for="empSalary" class="form-label">Employee Salary</label>
+        <input type="number" class="form-control" id="empSalary" name="empSalary" [(ngModel)]="emp.empSalary" required
+        min="10000" #empSalary="ngModel">
+        <div class="alert alert-danger" *ngIf="empSalary. invalid && empSalary.dirty">
+            <span *ngIf="empSalary.errors?.['required']">
+                Enter Employee Salary
+            </span>
+            <span *ngIf="empSalary.errors?.['min']">
+                Employee Salary must be greater than 10000
+            </span>
+        </div>
+    </div>
+
+
+
+    <div class="mt-3">
+        <label for="empDOB" class="form-label">Employee Birth Date</label>
+        <input type="date" class="form-control" id="empDOB" name="empDOB" [(ngModel)]="emp.empDOB" required
+         #empDOB="ngModel">
+        <div class="alert alert-danger" *ngIf="empDOB. invalid && empDOB.dirty">
+            Enter Employee Birth Date
+        </div>
+    </div>
+
+
+    <div class="mt-3">
+        <label for="empImage" class="form-label">Employee Image URL</label>
+        <input type="text" class="form-control" id="empImage" name="empImage" [(ngModel)]="emp.empImage" required
+         #empImage="ngModel">
+        <div class="alert alert-danger" *ngIf="empImage. invalid && empImage.dirty">
+            Enter Employee Image URL
+        </div>
+    </div>
+
+
+
+    <div class="mt-3">
+        <label for="empDept" class="form-label">Employee Department</label>
+        <select class="form-select" name="empDept" [(ngModel)]="emp.empDept">
+            <option value="Admin">Admin</option>
+            <option value="HR">HR</option>
+            <option value="Developer">Developer</option>
+
+
+        </select>
+
+
+    </div>
+
+
+
+
+
+
+
+
+     
+
+
+     <input type="submit" [disabled]="empform.invalid" value="save" class="btn btn-outline-success m-2">
+    </form>
+ </div>
+ 
+ 

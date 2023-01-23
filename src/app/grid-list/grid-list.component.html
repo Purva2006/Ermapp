@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="my-2">
+
+        <!--two way binding-->
+        <input type="text" class="form-control" name="searchname"
+         placeholder="Enter Employee Name" [(ngModel)]="searchQuery">
+      </div>
+
+      <div class="my-2">
+
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+          <button type="button" (click)="searchByDept()" class="btn btn-outline-primary">All</button>
+          <button type="button"  (click)="searchByDept('Admin')" class="btn btn-outline-primary">Admin</button>
+          <button type="button"  (click)="searchByDept('HR')" class="btn btn-outline-primary">HR</button>
+          <button type="button"  (click)="searchByDept('Software Developer')" class="btn btn-outline-primary">Software Developer</button>
+        </div>
+      </div>
+
+      
+    
+    <div *ngIf="filteremplist.length>0; else emptylist">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3"  *ngFor="let emp of filteremplist">
+              <app-emp-card [emp]="emp" (getid)="displayId($event)"></app-emp-card>
+            </div>
+        </div>
+
+    </div>
+    <ng-template #emptylist>
+
+        No employee is found
+
+    </ng-template>
+</div>

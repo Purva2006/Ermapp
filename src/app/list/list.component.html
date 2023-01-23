@@ -1,0 +1,83 @@
+<div class="container">
+  <!-- search box for employeename -->
+  <div class="my-2">
+
+    <!--two way binding-->
+    <input type="text" class="form-control" name="searchname"
+     placeholder="Enter Employee Name" [(ngModel)]="searchQuery">
+  </div>
+  {{searchQuery}}
+
+
+
+  <div class="my-2">
+
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+      <button type="button" (click)="searchByDept()" class="btn btn-outline-primary">All</button>
+      <button type="button"  (click)="searchByDept('Admin')" class="btn btn-outline-primary">Admin</button>
+      <button type="button"  (click)="searchByDept('HR')" class="btn btn-outline-primary">HR</button>
+      <button type="button"  (click)="searchByDept('Software Developer')" class="btn btn-outline-primary">Software Developer</button>
+    </div>
+  </div>
+
+
+
+
+  <div *ngIf="filteremplist.length > 0; else elseblock">
+    <h1>{{ "Employee" + "List" }}</h1>
+
+    <table class="table">
+      <!-- {{emplist | json}} -->
+      <tr>
+        <th>Id</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>DOB</th>
+        <th>Age</th>
+        <th>Incremented Salary</th>
+      </tr>
+
+      <tr *ngFor="let emp of filteremplist">
+        <td>{{ emp.empId }}</td>
+        <td><img [src]="emp.empImage" [alt]="emp.empName" width="100px" /></td>
+        <td [title]="emp.empName" [ngStyle]="mystyle" [ngClass]="myclasses">
+          {{ emp.empName | titlecase }}
+        </td>
+        
+        <td>{{ emp.empName | lowercase | slice : 0 : 2 }}@{{ emp.empId }}</td>
+
+        <td>{{emp.empDept}}</td>
+
+        <td appDelText>{{ emp.empSalary | currency : "INR" : "Rs." }}</td>
+        <td>{{ emp.empDOB | date }}</td>
+        <td>{{ emp.empDOB | age }}</td>
+        <!--here we use custom pipe i.e.-->
+        <td>{{ emp.empSalary | increment : 1 | currency : "INR" : true }}</td>
+
+        <td>
+          <button (click)="show(emp)" class="btn btn-outline-primary">
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- <p *ngIf="emplist.length==0">
+    No Employee is Found..
+
+</p> -->
+
+  <!-- ng-template tg will be execute if condition is false.
+     it is an special tag angular API
+     It is used to create custom section of which we can refer
+     with *ngIf directive.
+-->
+  <!-- else block -->
+  <ng-template #elseblock>
+    <p>No Employee is Found..</p>
+  </ng-template>
+</div>
